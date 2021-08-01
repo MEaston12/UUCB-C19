@@ -1,5 +1,7 @@
 {
     "name": "Transaction Tracker",
+    "start_url": "/",
+    "display": "standalone",
     "short_name": "Transor",
     "description": "An app that lets you track transactions.",
     "background_color": "#FFFFFF",
