@@ -1,10 +1,11 @@
-const db = {};
-
+let db;
 const request = indexedDB.open('transaction_tracker', 1);
+
+const storeName = 'new_transaction';
 
 request.onupgradeneeded = e => {
     const db = e.target.result;
-    db.createObjectStore('new_transaction', { autoIncrement: true })
+    db.createObjectStore(storeName, { autoIncrement: true })
 };
 
 request.onsuccess = e => {
@@ -19,14 +20,14 @@ request.onerror = e => {
 };
 
 const saveRecord = record => {
-    db.transaction(['new_transaction'], 'readwrite')
-        .objectStore('new_transaction')
+    db.transaction([storeName], 'readwrite')
+        .objectStore(storeName)
         .add(record)
 };
 
 const uploadTransactions = () => {
     // access your pending object store
-    const transactionStore = db.transaction(['new_transaction'], 'readwrite').objectStore('new_transaction');
+    const transactionStore = db.transaction([storeName], 'readwrite').objectStore(storeName);
 
     // get all records from store and set to a variable
     const getAll = transactionStore.getAll();
@@ -46,6 +47,10 @@ const uploadTransactions = () => {
             throw new Error(response);
         }
         // clear all items in your store
-        transactionStore.clear();
+        db.transaction([storeName], 'readwrite').objectStore(storeName).clear();
+        transactions.unshift(...getAll.result);
+        populateChart();
+        populateTable();
+        populateTotal();
     };
 };
