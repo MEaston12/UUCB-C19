@@ -1,8 +1,14 @@
 const APP_PREFIX = 'Transaction-Tracker-';
-const VERSION = '0.0.0.0.0.0.1.A';
+const VERSION = '0.0.0.0.0.0.1.D';
 const CACHE_NAME = APP_PREFIX + VERSION;
-
-const toCache = [];
+const toCache = [
+    "./index.html",
+    "./js/idb.js",
+    "./js/index.js",
+    "./css/styles.css",
+    "./",
+    "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css",
+];
 
 self.addEventListener('install', e => {
     const preCache = async () => {
